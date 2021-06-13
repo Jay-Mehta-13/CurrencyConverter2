@@ -2,10 +2,14 @@ package com.example.currencyconverter2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public String Curr1;
     public String Curr2;
     public TextView Result;
+    public Button Convert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +71,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         int spinnerPosition2 = adapter.getPosition("INR");
         List2.setSelection(spinnerPosition2);
         List2.setOnItemSelectedListener(this);
-
     }
 
     public void startThread(View view)
     {
         RateThread runnable2 = new RateThread();
         new Thread(runnable2).start();
+
+        Convert = findViewById(R.id.Convert);
+        final Animation animation = AnimationUtils.loadAnimation(this, R.anim.bounce);
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.5, 20);
+        animation.setInterpolator(interpolator);
+        Convert.startAnimation(animation);
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.sample);
+        mp.start();
     }
 
     @Override

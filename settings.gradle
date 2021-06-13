@@ -1,0 +1,2 @@
+rootProject.name = "CurrencyConverter2"
+include ':app'
